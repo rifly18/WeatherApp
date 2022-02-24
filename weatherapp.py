@@ -11,11 +11,10 @@ from datetime import datetime
 addresser = {}
 weekno = datetime.today().weekday()
 if weekno < 5:
-    addresser = {"Ricco":["Vesterbro 70,Denmark,5000","ricco_noe@hotmail.com"],
+    addresser = {"Ricco":["Vesterbro 70,Denmark,5000","ricco_noe@hotmail.com.com"],
                  "Pia og Frank":["Kløvermarken 48, Denmark, 5492","piaogfrank@os.dk"],
                  "Michael Knudsen":["Hvepsevej, Denmark,9000","mich989d@hotmail.com"],
                  "Louise Sjodsholm":["Vesterbro 70, Denmark,5000","louise@sjodsholm.dk"]}
-
     api_key = "3ced7307699853aed2cb4bab76662070"
     email = "riccoprogrammering@gmail.com"
     passw = "Qwertgfdsa123"
@@ -43,7 +42,6 @@ if weekno < 5:
         response = requests.get("https://api.openweathermap.org/data/2.5/onecall", params=parameters)
         response.raise_for_status()
         weather_data = response.json()
-        # print(weather_data)
         weather_slice = weather_data["hourly"][:12]  # Går fra 1 til 12. (fra 0-11)
         for hour_Data in weather_slice:
             condition_code = hour_Data["weather"][0]["id"]
@@ -54,11 +52,10 @@ if weekno < 5:
                 whenRain.append(False)
         for each in range(len(whenRain)):
             if whenRain[each] == True:
-                strings = strings + f"{now + each}: regner IKKE\n"
+                strings = strings + f"{now + each}: Det regner🌧️☔\n"
 
-            else:
-                strings  = strings + f"{now + each}: regner IKKE\n"
-
+            elif whenRain[each] == False:
+                strings  = strings + f"{now + each}: regner IKKE ☀️\n"
         message = MIMEMultipart()
         message['From'] = email
         message['To'] = value[1]
